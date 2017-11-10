@@ -4,26 +4,54 @@ $(document).ready(function(){
     //     function(){
     //     $(this).css("background-color", "grey");
     // });
-    // $(".reserved").hover(function(){
-    //     $(this).css("cursor", "not-allowed");},
-    //     function(){
-    //     $(this).css("cursor", "default");
-    // });
-    $(".available").click(function(){
+
+    var seat1;
+    var phone;
+    var guest;
+    $(".available").on("click",(function(){
         $(".inputs").css("display","flex");
+        $(".inputs").hide();
+        $(".inputs").fadeIn(500);
         var table = $(this).text();
-        var test =$(this);
         $("#tm").text("Table Number: " + table)
-        console.log(test);
+        var test = $(this);
         $("#save").click(function(){
             $(test).removeClass( "available" ).addClass( "reserved" );
-            $(".inputs").hide();
+            $(".inputs").fadeOut(500);
             $("#tm").remove(table);
+            $(".reserved").off("click");
+            if ($("div").hasClass("reserved")){
+                $(".reserved").hover(function(){
+                    $(".box",this).show();
+                    $(".box",this).text("name: "+seat1+  "number of guests: "+guest);
+                },
+                    function(){
+                    $(".box",this).empty();
+                    $(".box",this).hide();
+                }
+                ) 
+                }
         })
-    });
-    $("#exit").click(function(){
-        $(".inputs").hide();
+        
+
+    }));
+    $("#save").on("click", function(event) {
+        seat1 =$("#name").val();
+        phone=$("#phone").val();
+        guest=$("#guest").val();
+        console.log(seat1)
 
     });
+    $("#exit").click(function(){
+        $(".inputs").fadeOut(500);
+
+    });
+    if ($("div").hasClass("reserved")){
+        $(".reserved").hover(function(){
+            console.log("yay")},
+            function(){
+                console.log("nay")}
+        ) 
+        }
 
 });
